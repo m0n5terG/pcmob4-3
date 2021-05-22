@@ -10,21 +10,22 @@ const Stack = createStackNavigator();
   export default function App() {
     return (
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator mode="modal">
           <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{ headerShown: false }}
+            name="Chat"
+            component={ChatScreen}
+            
           />
           <Stack.Screen              
-            name="Chat" 
-            component={ChatScreen}
+            name="Login" 
+            component={LoginScreen}
+            options={{ headerShown: false }}
           />
         </Stack.Navigator>
       </NavigationContainer>
     );
    }
-   /*
+   
    const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -33,4 +34,4 @@ const Stack = createStackNavigator();
       justifyContent: "center",
     },
    });
-   */
+   
