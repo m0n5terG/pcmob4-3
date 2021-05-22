@@ -10,7 +10,6 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 import firebase from "../database/firebaseDB";
 
-const db = firebase.firestore();
 const auth = firebase.auth();
 
 export default function LoginScreen({ navigation }) {
@@ -18,13 +17,12 @@ export default function LoginScreen({ navigation }) {
     const [password, setPassword] = useState("");
     const [errorText, setErrorText] = useState("");
 
-    function login() {
+    function login() {     
         Keyboard.dismiss();
         auth
         .signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
             console.log("Signed In!");
-            navigation.navigate("Chat", { email });
         })
         .catch((error) => {
             console.log("Error!");
@@ -39,9 +37,9 @@ export default function LoginScreen({ navigation }) {
                 <Text style={styles.fieldTitle}>Email</Text>
                 <TextInput
                   style={styles.input}
-                  placeholder="Enter Email"
+                  placeholder="Enter Email"                                                                                                                                                   
                   value={email}
-                  onChangeText={(text) => setEmail(text)}
+                  onChangeText={(input) => setEmail(input)}
                 />
                 <Text style={styles.fieldTitle}>Password</Text>
                 <TextInput
@@ -49,7 +47,7 @@ export default function LoginScreen({ navigation }) {
                   placeholder="Enter Password"
                   secureTextEntry={true}
                   value={password}
-                  onChangeText={(text) => setPassword(text)}
+                  onChangeText={(input) => setPassword(input)}
                 />
                 <TouchableOpacity style={styles.loginButton} onPress={login}>
                 <Text style={styles.buttonText}>Log In</Text>
@@ -57,8 +55,7 @@ export default function LoginScreen({ navigation }) {
                 <Text style={styles.errorText}>{errorText}</Text>
             </View>
         </TouchableWithoutFeedback>
-
-    )
+    );
 }
 
 const styles = StyleSheet.create({
