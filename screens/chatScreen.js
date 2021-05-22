@@ -1,4 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { 
+    StyleSheet,
+    Keyboard, 
+    Text, 
+    View,
+    TouchableOpacity, 
+    TextInput 
+} from 'react-native';
 import firebase from "../database/firebaseDB";
 import { GiftedChat } from "react-native-gifted-chat";
 import { MaterialIcons } from '@expo/vector-icons'; 
