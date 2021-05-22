@@ -34,7 +34,7 @@ export default function ChatScreen({ navigation }) {
             const data = doc.data();
             console.log(data);
             const returnData = {
-              ...doc.data(),
+              ...data(),
               createdAt: new Date(data.createdAt.seconds * 1000),
             };
             return returnData;
