@@ -35,7 +35,7 @@ export default function LoginScreen({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <Text style={styles.title}>Chat App</Text>
+        <Text style={styles.title}>Chat App1</Text>
         <Text style={styles.fieldTitle}>Email</Text>
         <TextInput
           style={styles.input}

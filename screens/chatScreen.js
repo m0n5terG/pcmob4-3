@@ -11,6 +11,22 @@ export default function ChatScreen({ navigation }) {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
+    const unsubscribe = db
+      .orderBy("createdAt", "desc")
+      .onSnapshot((collectionSnapshot) => {
+        const serverMessages = collectionSnapshot.docs.map((doc) => {
+          const data = doc.data();
+          console.log(data);
+        
+          const returnData = {
+            ...doc.data(),
+            createdAt: new Date(data.createdAt.seconds * 1000),
+          };
+          return returnData;
+        });
+        setMessages(serverMessages);
+      });
+
     const unsubscribeAuth = auth.onAuthStateChanged((user) => {
       if (user) {
         navigation.navigate("Chat");
@@ -26,24 +42,10 @@ export default function ChatScreen({ navigation }) {
         </TouchableOpacity>
       ),
     });
-    const unsubscribeSnapshot = db
-      .orderBy("createdAt", "desc")
-      .onSnapshot((collectionSnapshot) => {
-        const serverMessages = collectionSnapshot.docs.map((doc) => {
-          const data = doc.data();
-          console.log(data);
-          const returnData = {
-            ...data(),
-            createdAt: new Date(data.createdAt.seconds * 1000),
-          };
-          return returnData;
-        });
-        setMessages(serverMessages);
-      });
-
+    
     return () => {
       unsubscribeAuth();
-      unsubscribeSnapshot();
+      unsubscribe();
     };
   }, []);
 
@@ -53,8 +55,8 @@ export default function ChatScreen({ navigation }) {
 
   function sendMessages(newMessages) {
     console.log(newMessages);
-    const newMessage = newMessages[0];
-    db.add(newMessage);
+    const newMessage = newMessages;
+    db.add(newMessage[0]);
   }
 
   return (
