@@ -10,32 +10,30 @@ import {
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import firebase from "../database/firebaseDB";
+//import auth from "react-native-firebase/auth";
 
 const { width, height } = Dimensions.get("screen");
 const auth = firebase.auth();
 
-export default function LoginScreen({ navigation }) {
+export default function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorText, setErrorText] = useState("");
 
-  function login() {
-    Keyboard.dismiss();
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        console.log("Signed In!");
-      })
-      .catch((error) => {
-        console.log("Error!");
-        setErrorText(error.message);
-      });
-  }
+  auth()
+  .createUserWithEmailAndPassword(email, password, displayname )
+  .then(() => {
+    console.log('User account created & signed in!');
+  })
+  .catch((error) => {
+    console.log("Error!");
+    setErrorText(error.message);
+  });
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <Text style={styles.title}>Chat App1</Text>
+        <Text style={styles.title}>Sign Up</Text>
         <Text style={styles.fieldTitle}>Email</Text>
         <TextInput
           style={styles.input}
@@ -54,10 +52,10 @@ export default function LoginScreen({ navigation }) {
           onChangeText={(input) => setPassword(input)}
         />
         <TouchableOpacity style={styles.loginButton} onPress={login}>
-          <Text style={styles.buttonText}>Log In</Text>
+          <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('SignUpScreen')}>
-          <Text style={styles.buttonText}>New User? Sign Up</Text>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate('LoginScreen')}>
+          <Text style={styles.buttonText}>Already have account? Log In</Text>
         </TouchableWithoutFeedback>
         <Text style={styles.errorText}>{errorText}</Text>
       </View>
@@ -85,7 +83,7 @@ const styles = StyleSheet.create({
     borderColor: "grey",
     borderWidth: 1,
     width: width / 1.5,
-    height: height / 20,
+    height: height / 15,
     marginBottom: 10,
     marginTop: 10,
     padding: 10,

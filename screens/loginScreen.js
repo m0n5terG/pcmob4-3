@@ -56,7 +56,7 @@ export default function LoginScreen({ navigation }) {
         <TouchableOpacity style={styles.loginButton} onPress={login}>
           <Text style={styles.buttonText}>Log In</Text>
         </TouchableOpacity>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('SignUpScreen')}>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate("SignUpScreen")}>
           <Text style={styles.buttonText}>New User? Sign Up</Text>
         </TouchableWithoutFeedback>
         <Text style={styles.errorText}>{errorText}</Text>
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     borderColor: "grey",
     borderWidth: 1,
     width: width / 1.5,
-    height: height / 20,
+    height: height / 15,
     marginBottom: 10,
     marginTop: 10,
     padding: 10,
