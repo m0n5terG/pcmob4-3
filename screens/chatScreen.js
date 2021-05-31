@@ -38,7 +38,8 @@ export default function ChatScreen({ navigation }) {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity onPress={logout}>
-          <MaterialIcons name="logout" size={24} color="grey" />
+          <MaterialIcons name="logout" size={24} color="grey" style={{marginRight: 20}}
+          />
         </TouchableOpacity>
       ),
     });
