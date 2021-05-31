@@ -24,6 +24,7 @@ export default function LoginScreen({ navigation }) {
     auth
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
+        const user = userCredential.user;
         console.log("Signed In!");
       })
       .catch((error) => {
@@ -84,8 +85,8 @@ const styles = StyleSheet.create({
   input: {
     borderColor: "grey",
     borderWidth: 1,
-    width: width / 1.5,
-    height: height / 15,
+    width: width / 1.3,
+    height: height / 20,
     marginBottom: 10,
     marginTop: 10,
     padding: 10,

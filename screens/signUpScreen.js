@@ -20,16 +20,19 @@ export default function SignUpScreen({ navigation }) {
   const [password, setPassword] = useState("");
   const [errorText, setErrorText] = useState("");
 
+function signUp() {
+  Keyboard.dismiss();
   auth()
   .createUserWithEmailAndPassword(email, password, displayname )
-  .then(() => {
+  .then((userCredential) => {
+    const user = userCredential.user;
     console.log('User account created & signed in!');
   })
   .catch((error) => {
     console.log("Error!");
     setErrorText(error.message);
   });
-
+}
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
@@ -51,7 +54,7 @@ export default function SignUpScreen({ navigation }) {
           value={password}
           onChangeText={(input) => setPassword(input)}
         />
-        <TouchableOpacity style={styles.loginButton} onPress={login}>
+        <TouchableOpacity style={styles.loginButton} onPress={signUp}>
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('LoginScreen')}>
