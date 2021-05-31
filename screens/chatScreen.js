@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native";
 import firebase from "../database/firebaseDB";
+
 import { GiftedChat } from "react-native-gifted-chat";
 import { MaterialIcons } from "@expo/vector-icons";
 
