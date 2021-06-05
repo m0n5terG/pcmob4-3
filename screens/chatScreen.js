@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import { TouchableOpacity, View } from "react-native";
 import firebase from "../database/firebaseDB";
-import { Avatar } from "react-native-elements";
-import { GiftedChat } from "react-native-gifted-chat";
+import { GiftedChat, Avatar } from "react-native-gifted-chat";
 import { MaterialIcons } from "@expo/vector-icons";
 
 const db = firebase.firestore().collection("messages");
@@ -11,7 +10,7 @@ const auth = firebase.auth();
 export default function ChatScreen({ navigation }) {
   const [messages, setMessages] = useState([]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const unsubscribe = db
       .orderBy("createdAt", "desc")
       .onSnapshot((collectionSnapshot) => {
@@ -39,12 +38,12 @@ export default function ChatScreen({ navigation }) {
     navigation.setOptions({
       headerLeft: () => (
         <View style={{ marginLeft: 20 }}>
-        <Avatar
-        rounded
-        source={{
-        uri: auth?.currentUser?.photoURL,
-        }}
-        />
+          <Avatar
+            rounded
+            source={{
+              uri: auth?.currentUser?.photoURL,
+            }}
+          />
         </View>
         ),
         
@@ -90,3 +89,4 @@ export default function ChatScreen({ navigation }) {
     />
   );
 }
+ 
