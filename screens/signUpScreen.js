@@ -9,8 +9,9 @@ import {
   TextInput,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { Input } from "react-native-elements";
 import firebase from "../database/firebaseDB";
-//import auth from "react-native-firebase/auth";
+
 
 const { width, height } = Dimensions.get("screen");
 const auth = firebase.auth();
@@ -19,19 +20,24 @@ export default function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorText, setErrorText] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
 function signUp() {
   Keyboard.dismiss();
-  auth()
-  .createUserWithEmailAndPassword(email, password, displayname )
+  auth
+  .createUserWithEmailAndPassword( email, password )
   .then((userCredential) => {
     const user = userCredential.user;
     console.log('User account created & signed in!');
+      user.updateProfile({
+      displayName: name,
+      photoURL: imageUrl ? imageUrl : "https://www.trackergps.com/canvas/images/icons/avatar.jpg"
   })
   .catch((error) => {
     console.log("Error!");
     setErrorText(error.message);
   });
+  })
 }
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -44,7 +50,7 @@ function signUp() {
           autoCorrect={false}
           placeholder="Enter Email"
           value={email}
-          onChangeText={(input) => setEmail(input)}
+          onChangeText={text => setEmail(text)}
         />
         <Text style={styles.fieldTitle}>Password</Text>
         <TextInput
@@ -52,14 +58,21 @@ function signUp() {
           placeholder="Enter Password"
           secureTextEntry={true}
           value={password}
-          onChangeText={(input) => setPassword(input)}
+          onChangeText={text => setPassword(text)}
         />
         <TouchableOpacity style={styles.loginButton} onPress={signUp}>
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('LoginScreen')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Text style={styles.buttonText}>Already have account? Log In</Text>
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
+        <Input
+          style={styles.input}
+          placeholder='Enter your image url'
+          label='Profile Picture'
+          leftIcon={{ type: 'material', name: 'face' }}
+          onChangeText={text => setImageUrl(text)}
+        />
         <Text style={styles.errorText}>{errorText}</Text>
       </View>
     </TouchableWithoutFeedback>
@@ -85,8 +98,8 @@ const styles = StyleSheet.create({
   input: {
     borderColor: "grey",
     borderWidth: 1,
-    width: width / 1.5,
-    height: height / 15,
+    width: width / 1.3,
+    height: height / 20,
     marginBottom: 10,
     marginTop: 10,
     padding: 10,
@@ -110,3 +123,4 @@ const styles = StyleSheet.create({
     height: 40,
   },
 });
+

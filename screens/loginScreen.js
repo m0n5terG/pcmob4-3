@@ -44,7 +44,7 @@ export default function LoginScreen({ navigation }) {
           autoCorrect={false}
           placeholder="Enter Email"
           value={email}
-          onChangeText={(input) => setEmail(input)}
+          onChangeText={text => setEmail(text)}
         />
         <Text style={styles.fieldTitle}>Password</Text>
         <TextInput
@@ -52,14 +52,14 @@ export default function LoginScreen({ navigation }) {
           placeholder="Enter Password"
           secureTextEntry={true}
           value={password}
-          onChangeText={(input) => setPassword(input)}
+          onChangeText={text => setPassword(text)}
         />
         <TouchableOpacity style={styles.loginButton} onPress={login}>
           <Text style={styles.buttonText}>Log In</Text>
         </TouchableOpacity>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate("SignUpScreen")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
           <Text style={styles.buttonText}>New User? Sign Up</Text>
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
         <Text style={styles.errorText}>{errorText}</Text>
       </View>
     </TouchableWithoutFeedback>

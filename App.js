@@ -5,7 +5,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import ChatScreen from "./screens/chatScreen";
 import LoginScreen from "./screens/loginScreen";
 import SignUpScreen from "./screens/signUpScreen";
-import { Modal } from "react-native";
 
 
 const Stack = createStackNavigator();
@@ -22,7 +21,7 @@ export default function App() {
         />
         <Stack.Screen
           component={SignUpScreen}
-          name="Singup"
+          name="Signup"
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

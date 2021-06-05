@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import firebase from "../database/firebaseDB";
-
+import { Avatar } from "react-native-elements";
 import { GiftedChat } from "react-native-gifted-chat";
 import { MaterialIcons } from "@expo/vector-icons";
 
@@ -37,6 +37,17 @@ export default function ChatScreen({ navigation }) {
     });
 
     navigation.setOptions({
+      headerLeft: () => (
+        <View style={{ marginLeft: 20 }}>
+        <Avatar
+        rounded
+        source={{
+        uri: auth?.currentUser?.photoURL,
+        }}
+        />
+        </View>
+        ),
+        
       headerRight: () => (
         <TouchableOpacity onPress={logout}>
           <MaterialIcons name="logout" size={24} color="grey" style={{marginRight: 20}}
@@ -57,15 +68,15 @@ export default function ChatScreen({ navigation }) {
 
   function sendMessages(newMessages) {
     console.log(newMessages);
-    const newMessage = newMessages;
-    db.add(newMessage[0]);
+    const newMessage = newMessages[0];
+    db.add(newMessage);
   }
 
   return (
     <GiftedChat
       messages={messages}
       onSend={(newMessages) => sendMessages(newMessages)}
-      renderUsernameOnMessage={true}
+      showAvatarForEveryMessage={true}
       listViewProps={{
         style: {
           backgroundColor: "#666",
