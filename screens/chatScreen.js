@@ -29,7 +29,7 @@ export default function ChatScreen({ navigation }) {
 
     const unsubscribeAuth = auth.onAuthStateChanged((user) => {
       if (user) {
-        navigation.navigate("Chat");
+        navigation.navigate("Chat", { id: user.id, email: user.email });
       } else {
         navigation.navigate("Login");
       }
@@ -41,7 +41,7 @@ export default function ChatScreen({ navigation }) {
           <Avatar
             rounded
             source={{
-              uri: auth?.currentUser?.photoURL,
+              uri: firebase.auth().currentUser.photoURL,
             }}
           />
         </View>
@@ -67,8 +67,8 @@ export default function ChatScreen({ navigation }) {
 
   function sendMessages(newMessages) {
     console.log(newMessages);
-    const newMessage = newMessages[0];
-    db.add(newMessage);
+  //  const newMessage = newMessages[0];
+    db.add(newMessages[0]);
   }
 
   return (
@@ -76,15 +76,18 @@ export default function ChatScreen({ navigation }) {
       messages={messages}
       onSend={(newMessages) => sendMessages(newMessages)}
       showAvatarForEveryMessage={true}
+      renderAvatarOnTop={true}
+      renderUsernameOnMessage={true}
+      render
       listViewProps={{
         style: {
           backgroundColor: "#666",
         },
       }}
       user={{
-        _id: auth?.currentUser?.email,
-        name: auth?.currentUser?.displayName,
-        avatar: auth?.currentUser?.photoURL,
+        _id: firebase.auth().currentUser.email,
+        name: firebase.auth().currentUser.displayName,
+        avatar: firebase.auth().currentUser.photoURL,
       }}
     />
   );

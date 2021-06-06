@@ -12,7 +12,7 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator mode="modal">
         <Stack.Screen component={ChatScreen} name="Chat" />
         <Stack.Screen
           component={LoginScreen}
