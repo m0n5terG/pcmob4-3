@@ -10,7 +10,7 @@ const auth = firebase.auth();
 export default function ChatScreen({ navigation }) {
   const [messages, setMessages] = useState([]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const unsubscribe = db
       .orderBy("createdAt", "desc")
       .onSnapshot((collectionSnapshot) => {
