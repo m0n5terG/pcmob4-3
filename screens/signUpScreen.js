@@ -20,6 +20,7 @@ export default function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorText, setErrorText] = useState("");
+  const [displayName, setDisplayName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
 function signUp() {
@@ -43,6 +44,15 @@ function signUp() {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <Text style={styles.title}>Sign Up</Text>
+        <Text style={styles.fieldTitle}>Name</Text>
+        <TextInput
+          style={styles.input}
+          autoCapitalize={true}
+          autoCorrect={false}
+          placeholder="Enter Display Name"
+          value={displayName}
+          onChangeText={text => setDisplayName(text)}
+        />
         <Text style={styles.fieldTitle}>Email</Text>
         <TextInput
           style={styles.input}

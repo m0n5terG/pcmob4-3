@@ -41,7 +41,7 @@ export default function ChatScreen({ navigation }) {
           <Avatar
             rounded
             source={{
-              uri: firebase.auth().currentUser.photoURL,
+              uri: auth?.currentUser?.photoURL,
             }}
           />
         </View>
@@ -49,7 +49,11 @@ export default function ChatScreen({ navigation }) {
         
       headerRight: () => (
         <TouchableOpacity onPress={logout}>
-          <MaterialIcons name="logout" size={24} color="grey" style={{marginRight: 20}}
+          <MaterialIcons 
+            name="logout" 
+            size={24} 
+            color="grey" 
+            style={{marginRight: 20}}
           />
         </TouchableOpacity>
       ),
@@ -76,18 +80,16 @@ export default function ChatScreen({ navigation }) {
       messages={messages}
       onSend={(newMessages) => sendMessages(newMessages)}
       showAvatarForEveryMessage={true}
-      renderAvatarOnTop={true}
       renderUsernameOnMessage={true}
-      render
       listViewProps={{
         style: {
           backgroundColor: "#666",
         },
       }}
       user={{
-        _id: firebase.auth().currentUser.email,
-        name: firebase.auth().currentUser.displayName,
-        avatar: firebase.auth().currentUser.photoURL,
+        _id: auth?.currentUser?.email,
+        name: auth?.currentUser?.displayName,
+        avatar: auth?.currentUser?.photoURL,
       }}
     />
   );
