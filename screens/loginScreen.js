@@ -40,7 +40,6 @@ export default function LoginScreen({ navigation }) {
       } else {
         navigation.navigate("Login");
         //navigation.canGoBack() && navigation.popToTop();
-
       }
     });
     return unsubscribe;
@@ -52,7 +51,7 @@ export default function LoginScreen({ navigation }) {
         <Text style={styles.title}>Chat App</Text>
         <Input
           style={styles.input}
-          autoCapitalize='none'
+          autoCapitalize="none"
           placeholder="Enter your email"
           label="Email"
           value={email}
@@ -106,7 +105,7 @@ const styles = StyleSheet.create({
     backgroundColor: "orange",
     borderRadius: 5,
     width: width / 2,
-    marginBottom: 20
+    marginBottom: 20,
   },
   buttonText: {
     textAlign: "center",

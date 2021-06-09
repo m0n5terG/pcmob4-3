@@ -1,10 +1,7 @@
 import React, { useCallback, useState, useLayoutEffect } from "react";
-import {
-  View,
-  TouchableOpacity,
-} from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import firebase from "../database/firebaseDB";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
 import { GiftedChat, Avatar } from "react-native-gifted-chat";
 
 const db = firebase.firestore();
@@ -43,23 +40,26 @@ export default function ChatScreen({ navigation }) {
       ),
       headerRight: () => (
         <TouchableOpacity onPress={logout}>
-          <Ionicons name="log-out-outline" size={24} color="black" style={{ marginRight: 20 }}/>
+          <Ionicons
+            name="log-out-outline"
+            size={24}
+            color="black"
+            style={{ marginRight: 20 }}
+          />
         </TouchableOpacity>
       ),
     });
-    
 
     return unsubscribe;
   }, []);
 
   function logout() {
-    auth.signOut().then(() => {
-      
-      navigation.navigate("Login")
-    }) 
-    .catch((error) => {
-
-    })
+    auth
+      .signOut()
+      .then(() => {
+        navigation.navigate("Login");
+      })
+      .catch((error) => {});
   }
 
   const onSend = useCallback((messages = []) => {

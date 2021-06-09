@@ -39,15 +39,14 @@ export default function SignUpScreen({ navigation }) {
             console.log("Error!");
             setErrorText(error.message);
           });
-          navigation.navigate('Chat');
+        navigation.navigate("Chat");
 
         //...
       });
   }
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    
-        <ScrollView style={styles.container}>
+      <ScrollView style={styles.container}>
         <Text style={styles.title}>Sign Up</Text>
         <Input
           style={styles.input}
@@ -59,7 +58,7 @@ export default function SignUpScreen({ navigation }) {
         />
         <Input
           style={styles.input}
-          autoCapitalize='none'
+          autoCapitalize="none"
           placeholder="Enter your email"
           label="Email"
           value={email}
@@ -91,7 +90,7 @@ export default function SignUpScreen({ navigation }) {
         </TouchableOpacity>
 
         <Text style={styles.errorText}>{errorText}</Text>
-        </ScrollView>
+      </ScrollView>
     </TouchableWithoutFeedback>
   );
 }
@@ -107,7 +106,7 @@ const styles = StyleSheet.create({
     color: "#f11212",
     marginTop: height / 10,
     marginBottom: 30,
-    alignSelf: 'center'
+    alignSelf: "center",
   },
   input: {
     borderColor: "grey",
@@ -118,11 +117,11 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     padding: 10,
-    alignSelf: 'center',
+    alignSelf: "center",
     backgroundColor: "orange",
     borderRadius: 5,
     width: width / 2,
-    marginBottom: 20
+    marginBottom: 20,
   },
   buttonText: {
     textAlign: "center",
