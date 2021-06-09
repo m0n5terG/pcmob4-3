@@ -1,40 +1,39 @@
-import React, { useEffect, useState, useLayoutEffect } from "react";
-import { TouchableOpacity, View } from "react-native";
+import React, { useCallback, useState, useLayoutEffect } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  Button,
+} from "react-native";
 import firebase from "../database/firebaseDB";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { GiftedChat, Avatar } from "react-native-gifted-chat";
-import { MaterialIcons } from "@expo/vector-icons";
 
-const db = firebase.firestore().collection("messages");
+const db = firebase.firestore();
 const auth = firebase.auth();
 
 export default function ChatScreen({ navigation }) {
   const [messages, setMessages] = useState([]);
 
-  useEffect(() => {
+  // This loads data from firebase
+  useLayoutEffect(() => {
     const unsubscribe = db
+      .collection("chats")
       .orderBy("createdAt", "desc")
-      .onSnapshot((collectionSnapshot) => {
-        const serverMessages = collectionSnapshot.docs.map((doc) => {
-          const data = doc.data();
-          console.log(data);
-        
-          const returnData = {
-            ...doc.data(),
-            createdAt: new Date(data.createdAt.seconds * 1000),
-          };
-          return returnData;
-        });
-        setMessages(serverMessages);
-      });
+      .onSnapshot((snapshot) =>
+        setMessages(
+          snapshot.docs.map((doc) => ({
+            _id: doc.data()._id,
+            createdAt: doc.data().createdAt.toDate(),
+            text: doc.data().text,
+            user: doc.data().user,
+          }))
+        )
+      );
 
-    const unsubscribeAuth = auth.onAuthStateChanged((user) => {
-      if (user) {
-        navigation.navigate("Chat", { id: user.id, email: user.email });
-      } else {
-        navigation.navigate("Login");
-      }
-    });
-
+    // This sets up the top right button
     navigation.setOptions({
       headerLeft: () => (
         <View style={{ marginLeft: 20 }}>
@@ -45,47 +44,50 @@ export default function ChatScreen({ navigation }) {
             }}
           />
         </View>
-        ),
-        
+      ),
       headerRight: () => (
         <TouchableOpacity onPress={logout}>
-          <MaterialIcons 
-            name="logout" 
-            size={24} 
-            color="grey" 
-            style={{marginRight: 20}}
+          <MaterialCommunityIcons
+            name="logout"
+            size={20}
+            color="black"
+            style={{ marginRight: 20 }}
           />
         </TouchableOpacity>
       ),
     });
-    
-    return () => {
-      unsubscribeAuth();
-      unsubscribe();
-    };
+
+    return unsubscribe;
   }, []);
 
   function logout() {
-    auth.signOut();
+    auth.signOut().then(() => {
+      
+      navigation.replace("Login")
+    }) 
+    .catch((error) => {
+
+    })
   }
 
-  function sendMessages(newMessages) {
-    console.log(newMessages);
-  //  const newMessage = newMessages[0];
-    db.add(newMessages[0]);
-  }
+  const onSend = useCallback((messages = []) => {
+    setMessages((previousMessages) =>
+      GiftedChat.append(previousMessages, messages)
+    );
+    const { _id, createdAt, text, user } = messages[0];
+    db.collection("chats").add({
+      _id,
+      createdAt,
+      text,
+      user,
+    });
+  }, []);
 
   return (
     <GiftedChat
       messages={messages}
-      onSend={(newMessages) => sendMessages(newMessages)}
       showAvatarForEveryMessage={true}
-      renderUsernameOnMessage={true}
-      listViewProps={{
-        style: {
-          backgroundColor: "#666",
-        },
-      }}
+      onSend={(messages) => onSend(messages)}
       user={{
         _id: auth?.currentUser?.email,
         name: auth?.currentUser?.displayName,
@@ -94,4 +96,3 @@ export default function ChatScreen({ navigation }) {
     />
   );
 }
- 

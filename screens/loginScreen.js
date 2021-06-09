@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Dimensions,
   StyleSheet,
@@ -6,9 +6,9 @@ import {
   Text,
   View,
   TouchableWithoutFeedback,
-  TextInput,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { Input } from "react-native-elements";
 import firebase from "../database/firebaseDB";
 
 const { width, height } = Dimensions.get("screen");
@@ -33,26 +33,36 @@ export default function LoginScreen({ navigation }) {
       });
   }
 
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(function (user) {
+      if (user) {
+        navigation.replace("Chat");
+      } else {
+        navigation.navigate("Login");
+      }
+    });
+    return unsubscribe;
+  }, []);
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <Text style={styles.title}>Chat App</Text>
-        <Text style={styles.fieldTitle}>Email</Text>
-        <TextInput
+        <Input
           style={styles.input}
-          autoCapitalize="none"
-          autoCorrect={false}
-          placeholder="Enter Email"
+          placeholder="Enter your email"
+          label="Email"
           value={email}
-          onChangeText={text => setEmail(text)}
+          leftIcon={{ type: "material", name: "alternate-email" }}
+          onChangeText={(text) => setEmail(text)}
         />
-        <Text style={styles.fieldTitle}>Password</Text>
-        <TextInput
+        <Input
           style={styles.input}
-          placeholder="Enter Password"
-          secureTextEntry={true}
+          placeholder="Enter your password"
+          label="Password"
           value={password}
-          onChangeText={text => setPassword(text)}
+          leftIcon={{ type: "material", name: "lock" }}
+          onChangeText={(text) => setPassword(text)}
         />
         <TouchableOpacity style={styles.loginButton} onPress={login}>
           <Text style={styles.buttonText}>Log In</Text>
@@ -76,35 +86,31 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: '#f11212',
+    color: "#f11212",
+    marginTop: height / 10,
     marginBottom: 10,
-  },
-  fieldTitle: {
-    fontSize: 16,
   },
   input: {
     borderColor: "grey",
     borderWidth: 1,
     width: width / 1.3,
     height: height / 20,
-    marginBottom: 10,
-    marginTop: 10,
     padding: 10,
   },
   loginButton: {
     padding: 10,
     backgroundColor: "orange",
     borderRadius: 5,
-    marginTop: 30,
-    marginBottom: 20,
     width: width / 2,
+    marginBottom: 20
   },
   buttonText: {
     textAlign: "center",
+    color: "blue",
   },
   errorText: {
     color: "red",
-    marginTop: 20,
+    marginTop: 10,
     marginLeft: 20,
     marginRight: 20,
     height: 40,

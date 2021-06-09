@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Dimensions,
   StyleSheet,
@@ -6,12 +6,10 @@ import {
   Text,
   View,
   TouchableWithoutFeedback,
-  TextInput,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Input } from "react-native-elements";
 import firebase from "../database/firebaseDB";
-
 
 const { width, height } = Dimensions.get("screen");
 const auth = firebase.auth();
@@ -20,69 +18,74 @@ export default function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorText, setErrorText] = useState("");
-  const [displayName, setDisplayName] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [name, setName] = useState("");
+  const [imageURL, setImageURL] = useState("");
 
-function signUp() {
-  Keyboard.dismiss();
-  auth
-  .createUserWithEmailAndPassword( email, password )
-  .then((userCredential) => {
-    const user = userCredential.user;
-    console.log('User account created & signed in!');
-      user.updateProfile({
-      displayName: name,
-      photoURL: imageUrl ? imageUrl : "https://www.trackergps.com/canvas/images/icons/avatar.jpg"
-  })
-  .catch((error) => {
-    console.log("Error!");
-    setErrorText(error.message);
-  });
-  })
-}
+  function signUp() {
+    Keyboard.dismiss();
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log("User account created & signed in!");
+        user
+          .updateProfile({
+            displayName: name,
+            photoURL: imageURL
+              ? imageURL
+              : "https://www.trackergps.com/canvas/images/icons/avatar.jpg",
+          })
+          .catch((error) => {
+            console.log("Error!");
+            setErrorText(error.message);
+          });
+        navigation.popToTop();
+        //...
+      });
+  }
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <Text style={styles.title}>Sign Up</Text>
-        <Text style={styles.fieldTitle}>Name</Text>
-        <TextInput
+        <Input
           style={styles.input}
-          autoCapitalize={true}
-          autoCorrect={false}
-          placeholder="Enter Display Name"
-          value={displayName}
-          onChangeText={text => setDisplayName(text)}
+          placeholder="Enter display Name"
+          label="Display Name"
+          value={name}
+          leftIcon={{ type: "material", name: "how-to-reg" }}
+          onChangeText={(text) => setName(text)}
         />
-        <Text style={styles.fieldTitle}>Email</Text>
-        <TextInput
+        <Input
           style={styles.input}
-          autoCapitalize="none"
-          autoCorrect={false}
-          placeholder="Enter Email"
+          placeholder="Enter your email"
+          label="Email"
           value={email}
-          onChangeText={text => setEmail(text)}
+          leftIcon={{ type: "material", name: "alternate-email" }}
+          onChangeText={(text) => setEmail(text)}
         />
-        <Text style={styles.fieldTitle}>Password</Text>
-        <TextInput
+        <Input
           style={styles.input}
-          placeholder="Enter Password"
-          secureTextEntry={true}
+          placeholder="Enter your password"
+          label="Password"
           value={password}
-          onChangeText={text => setPassword(text)}
+          leftIcon={{ type: "material", name: "lock" }}
+          onChangeText={(text) => setPassword(text)}
+        />
+        <Input
+          style={styles.input}
+          placeholder="Enter your image url"
+          label="Profile Picture"
+          value={imageURL}
+          leftIcon={{ type: "material", name: "face" }}
+          onChangeText={(text) => setImageURL(text)}
         />
         <TouchableOpacity style={styles.loginButton} onPress={signUp}>
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
           <Text style={styles.buttonText}>Already have account? Log In</Text>
         </TouchableOpacity>
-        <Input
-          style={styles.input}
-          placeholder='Enter your image url'
-          label='Profile Picture'
-          leftIcon={{ type: 'material', name: 'face' }}
-          onChangeText={text => setImageUrl(text)}
-        />
+
         <Text style={styles.errorText}>{errorText}</Text>
       </View>
     </TouchableWithoutFeedback>
@@ -99,38 +102,33 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: '#f11212',
+    color: "#f11212",
+    marginTop: height / 10,
     marginBottom: 10,
-  },
-  fieldTitle: {
-    fontSize: 16,
   },
   input: {
     borderColor: "grey",
     borderWidth: 1,
     width: width / 1.3,
     height: height / 20,
-    marginBottom: 10,
-    marginTop: 10,
     padding: 10,
   },
   loginButton: {
     padding: 10,
     backgroundColor: "orange",
     borderRadius: 5,
-    marginTop: 30,
-    marginBottom: 20,
     width: width / 2,
+    marginBottom: 20
   },
   buttonText: {
     textAlign: "center",
+    color: "blue",
   },
   errorText: {
     color: "red",
-    marginTop: 20,
+    marginTop: 10,
     marginLeft: 20,
     marginRight: 20,
     height: 40,
   },
 });
-
