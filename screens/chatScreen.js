@@ -1,11 +1,7 @@
 import React, { useCallback, useState, useLayoutEffect } from "react";
 import {
   View,
-  Text,
-  TextInput,
-  StyleSheet,
   TouchableOpacity,
-  Button,
 } from "react-native";
 import firebase from "../database/firebaseDB";
 import { Ionicons } from '@expo/vector-icons';

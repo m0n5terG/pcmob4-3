@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Keyboard,
   Text,
-  SafeAreaView,
   ScrollView,
   TouchableWithoutFeedback,
 } from "react-native";
@@ -101,15 +100,13 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#f5f5f5",
     flex: 1,
-    //justifyContent: "center",
-    //alignItems: "center",
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     color: "#f11212",
     marginTop: height / 10,
-    marginBottom: 10,
+    marginBottom: 30,
     alignSelf: 'center'
   },
   input: {
