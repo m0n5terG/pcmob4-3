@@ -55,7 +55,7 @@ export default function ChatScreen({ navigation }) {
   function logout() {
     auth.signOut().then(() => {
       
-      navigation.replace("Login")
+      navigation.navigate("Login")
     }) 
     .catch((error) => {
 

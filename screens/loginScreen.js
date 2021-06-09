@@ -38,8 +38,8 @@ export default function LoginScreen({ navigation }) {
       if (user) {
         navigation.replace("Chat");
       } else {
-        //navigation.navigate("Login");
-        navigation.canGoBack() && navigation.popToTop();
+        navigation.navigate("Login");
+        //navigation.canGoBack() && navigation.popToTop();
 
       }
     });

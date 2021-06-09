@@ -33,7 +33,7 @@ export default function SignUpScreen({ navigation }) {
             displayName: name,
             photoURL: imageURL
               ? imageURL
-              : "https://www.trackergps.com/canvas/images/icons/avatar.jpg",
+              : "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y",
           })
           .catch((error) => {
             console.log("Error!");
