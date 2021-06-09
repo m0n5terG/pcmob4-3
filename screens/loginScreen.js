@@ -38,7 +38,9 @@ export default function LoginScreen({ navigation }) {
       if (user) {
         navigation.replace("Chat");
       } else {
-        navigation.navigate("Login");
+        //navigation.navigate("Login");
+        navigation.canGoBack() && navigation.popToTop();
+
       }
     });
     return unsubscribe;
@@ -50,6 +52,7 @@ export default function LoginScreen({ navigation }) {
         <Text style={styles.title}>Chat App</Text>
         <Input
           style={styles.input}
+          autoCapitalize='none'
           placeholder="Enter your email"
           label="Email"
           value={email}
@@ -59,6 +62,7 @@ export default function LoginScreen({ navigation }) {
         <Input
           style={styles.input}
           placeholder="Enter your password"
+          secureTextEntry
           label="Password"
           value={password}
           leftIcon={{ type: "material", name: "lock" }}
@@ -95,7 +99,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: width / 1.3,
     height: height / 20,
-    padding: 10,
+    paddingHorizontal: 10,
   },
   loginButton: {
     padding: 10,

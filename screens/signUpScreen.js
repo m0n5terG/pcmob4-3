@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Keyboard,
   Text,
-  View,
+  SafeAreaView,
+  ScrollView,
   TouchableWithoutFeedback,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -39,13 +40,15 @@ export default function SignUpScreen({ navigation }) {
             console.log("Error!");
             setErrorText(error.message);
           });
-        navigation.popToTop();
+          navigation.navigate('Chat');
+
         //...
       });
   }
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
+    
+        <ScrollView style={styles.container}>
         <Text style={styles.title}>Sign Up</Text>
         <Input
           style={styles.input}
@@ -57,6 +60,7 @@ export default function SignUpScreen({ navigation }) {
         />
         <Input
           style={styles.input}
+          autoCapitalize='none'
           placeholder="Enter your email"
           label="Email"
           value={email}
@@ -66,6 +70,7 @@ export default function SignUpScreen({ navigation }) {
         <Input
           style={styles.input}
           placeholder="Enter your password"
+          secureTextEntry
           label="Password"
           value={password}
           leftIcon={{ type: "material", name: "lock" }}
@@ -76,7 +81,7 @@ export default function SignUpScreen({ navigation }) {
           placeholder="Enter your image url"
           label="Profile Picture"
           value={imageURL}
-          leftIcon={{ type: "material", name: "face" }}
+          leftIcon={{ type: "material", name: "camera-alt" }}
           onChangeText={(text) => setImageURL(text)}
         />
         <TouchableOpacity style={styles.loginButton} onPress={signUp}>
@@ -87,7 +92,7 @@ export default function SignUpScreen({ navigation }) {
         </TouchableOpacity>
 
         <Text style={styles.errorText}>{errorText}</Text>
-      </View>
+        </ScrollView>
     </TouchableWithoutFeedback>
   );
 }
@@ -96,8 +101,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#f5f5f5",
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    //justifyContent: "center",
+    //alignItems: "center",
   },
   title: {
     fontSize: 24,
@@ -105,16 +110,18 @@ const styles = StyleSheet.create({
     color: "#f11212",
     marginTop: height / 10,
     marginBottom: 10,
+    alignSelf: 'center'
   },
   input: {
     borderColor: "grey",
     borderWidth: 1,
     width: width / 1.3,
     height: height / 20,
-    padding: 10,
+    paddingHorizontal: 10,
   },
   loginButton: {
     padding: 10,
+    alignSelf: 'center',
     backgroundColor: "orange",
     borderRadius: 5,
     width: width / 2,

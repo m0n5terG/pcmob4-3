@@ -8,7 +8,7 @@ import {
   Button,
 } from "react-native";
 import firebase from "../database/firebaseDB";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from '@expo/vector-icons';
 import { GiftedChat, Avatar } from "react-native-gifted-chat";
 
 const db = firebase.firestore();
@@ -47,15 +47,11 @@ export default function ChatScreen({ navigation }) {
       ),
       headerRight: () => (
         <TouchableOpacity onPress={logout}>
-          <MaterialCommunityIcons
-            name="logout"
-            size={20}
-            color="black"
-            style={{ marginRight: 20 }}
-          />
+          <Ionicons name="log-out-outline" size={24} color="black" style={{ marginRight: 20 }}/>
         </TouchableOpacity>
       ),
     });
+    
 
     return unsubscribe;
   }, []);
@@ -88,6 +84,12 @@ export default function ChatScreen({ navigation }) {
       messages={messages}
       showAvatarForEveryMessage={true}
       onSend={(messages) => onSend(messages)}
+      renderUsernameOnMessage={true}
+      listViewProps={{
+        style: {
+          backgroundColor: "#E8FFFE",
+        },
+      }}
       user={{
         _id: auth?.currentUser?.email,
         name: auth?.currentUser?.displayName,
