@@ -39,7 +39,6 @@ export default function LoginScreen({ navigation }) {
         navigation.replace("Chat");
       } else {
         navigation.navigate("Login");
-        //navigation.canGoBack() && navigation.popToTop();
       }
     });
     return unsubscribe;

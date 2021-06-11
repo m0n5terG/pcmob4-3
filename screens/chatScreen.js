@@ -59,7 +59,9 @@ export default function ChatScreen({ navigation }) {
       .then(() => {
         navigation.navigate("Login");
       })
-      .catch((error) => {});
+      .catch((error) => {
+        console.log(error)
+      });
   }
 
   const onSend = useCallback((messages = []) => {
