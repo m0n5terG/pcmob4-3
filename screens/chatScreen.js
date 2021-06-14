@@ -60,7 +60,9 @@ export default function ChatScreen({ navigation }) {
         navigation.navigate("Login");
       })
       .catch((error) => {
-        console.log(error)
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage)
       });
   }
 
